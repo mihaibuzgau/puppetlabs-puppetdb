@@ -5,8 +5,8 @@ describe 'puppetdb::master::config', type: :class do
     context "on #{os}" do
       let(:facts) do
         facts.merge(puppetversion: Puppet.version,
-                    fqdn: 'puppetdb.example.com',
-                    selinux: true)
+                    networking: { fqdn: 'puppetdb.example.com' },
+                    selinux: true )
       end
 
       context 'when PuppetDB on remote server' do
@@ -80,12 +80,18 @@ describe 'puppetdb::master::config', type: :class do
   context 'when upgrading to from v2 to v3 of PuppetDB on RedHat' do
     let(:facts) do
       {
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
         puppetversion: Puppet.version,
-        operatingsystemrelease: '7.0',
         kernel: 'Linux',
-        selinux: true,
+        os: {
+          family: 'RedHat',
+          name: 'RedHat',
+          release: { 'full' => '7.0' },
+          selinux: { 'enabled' => true }
+        },
+        osfamily: 'RedHat', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        operatingsystem: 'RedHat', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        operatingsystemrelease: '7.0', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        selinux: true, #TODO: Remove this once, puppetlabs-firewall move to structured facts
       }
     end
     let(:pre_condition) { 'class { "puppetdb::globals": version => "3.1.1-1.el7", }' }
@@ -96,12 +102,18 @@ describe 'puppetdb::master::config', type: :class do
   context 'when restart_puppet is true' do
     let(:facts) do
       {
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
         puppetversion: Puppet.version,
-        operatingsystemrelease: '7.0',
         kernel: 'Linux',
-        selinux: true,
+        os: {
+          family: 'RedHat',
+          name: 'RedHat',
+          release: { 'full' => '7.0' },
+          selinux: { 'enabled' => true }
+        },
+        osfamily: 'RedHat', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        operatingsystem: 'RedHat', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        operatingsystemrelease: '7.0', #TODO: Remove this once, puppetlabs-firewall move to structured facts
+        selinux: true, #TODO: Remove this once, puppetlabs-firewall move to structured facts
       }
     end
 

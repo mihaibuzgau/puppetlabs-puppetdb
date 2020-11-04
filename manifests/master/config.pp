@@ -1,6 +1,6 @@
 # Manage puppet configuration. See README.md for more details.
 class puppetdb::master::config (
-  $puppetdb_server             = $::fqdn,
+  $puppetdb_server             = $facts['networking']['fqdn'],
   $puppetdb_port               = defined(Class['puppetdb']) ? {
     true    => $::puppetdb::disable_ssl ? {
       true => 8080,
@@ -52,7 +52,7 @@ class puppetdb::master::config (
   # installed to revert the change.
   if !($puppetdb::params::puppetdb_version in ['present','absent'])
   and versioncmp($puppetdb::params::puppetdb_version, '3.0.0') >= 0
-  and $::osfamily in ['RedHat','Suse'] {
+  and $facts['os']['family'] in ['RedHat','Suse'] {
     exec { 'Remove puppetdb-terminus metadata for upgrade':
       command => 'rpm -e --justdb puppetdb-terminus',
       path    => '/sbin/:/bin/',

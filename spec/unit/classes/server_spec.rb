@@ -12,7 +12,7 @@ describe 'puppetdb::server', type: :class do
                     selinux: true)
       end
 
-      pathdir = case facts[:osfamily]
+      pathdir = case facts[:os][:family]
                 when 'Debian'
                   '/etc/default/puppetdb'
                 else

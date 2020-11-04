@@ -6,7 +6,9 @@ describe 'puppetdb', type: :class do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge(selinux: false)
+        facts.merge(
+          selinux: false,
+        )
       end
 
       describe 'when using default values for puppetdb class' do
@@ -72,14 +74,16 @@ describe 'puppetdb', type: :class do
   context 'with invalid arguments on a supported platform' do
     let(:facts) do
       {
-        osfamily: 'RedHat',
-        operatingsystem: 'Debian',
         puppetversion: Puppet.version,
-        operatingsystemrelease: '6.0',
         kernel: 'Linux',
+        os: {
+          family: 'RedHat',
+          name: 'Debian',
+          release: { 'full' => '6.0' },
+        },
         concat_basedir: '/var/lib/puppet/concat',
-        selinux: true,
         iptables_persistent_version: '0.5.7',
+        selinux: false
       }
     end
 

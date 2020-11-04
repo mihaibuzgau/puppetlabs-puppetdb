@@ -751,7 +751,7 @@ from managing that file, and you’ll need to manage it yourself.
 #### `puppetdb_server`
 
 The dns name or ip of the PuppetDB server. Defaults to the hostname of the
-current node, i.e. `$::fqdn`.
+current node, i.e. `$facts['networking']['fqdn']`.
 
 #### `puppetdb_port`
 
